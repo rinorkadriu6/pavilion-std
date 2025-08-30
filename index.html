@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pavilion Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.cdnfonts.com/css/bahnschrift" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #E0E0E0;
+            color: #000;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Bahnschrift', sans-serif;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 30px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 20px;
+        }
+
+        .nav-item {
+            margin-bottom: 10px;
+        }
+
+        .nav-link {
+            color: #000;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #000;
+            color: #E0E0E0;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #000;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            background: #E0E0E0;
+        }
+
+        .logo {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+            color: #000;
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            color: #333;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .cta-button {
+            background: #000;
+            color: #E0E0E0;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 80px;
+            font-family: 'Bahnschrift', sans-serif;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            text-align: center;
+            color: #555;
+        }
+
+        .scroll-indicator p {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .fa-chevron-down {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Projects Section */
+        .projects-section {
+            min-height: 100vh;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-slider {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .project-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: translateX(100%);
+        }
+
+        .project-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 2;
+        }
+
+        .project-slide.exit {
+            transform: translateX(-100%);
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            color: #E0E0E0;
+        }
+
+        .project-title {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .project-details {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .project-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+
+        .project-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .next-button {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.8);
+            color: #E0E0E0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Bahnschrift', sans-serif;
+        }
+
+        .next-button:hover {
+            background: rgba(0, 0, 0, 1);
+            transform: translateY(-2px);
+        }
+
+        /* Navigation Dots */
+        .project-nav {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #E0E0E0;
+            transform: scale(1.2);
+        }
+
+        /* Footer Section */
+        footer {
+            background: #000;
+            color: #E0E0E0;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: #E0E0E0;
+        }
+
+        .footer-column p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #E0E0E0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            color: #E0E0E0;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #E0E0E0;
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .footer-bottom p {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3.5rem;
+            }
+
+            .tagline {
+                font-size: 1.4rem;
+            }
+
+            .project-title {
+                font-size: 1.8rem;
+            }
+
+            .project-details {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .next-button {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .project-info {
+                padding: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            /* Mobile Nav */
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s ease;
+                padding: 50px 0;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-link {
+                color: #E0E0E0;
+                font-size: 1.5rem;
+                padding: 15px 30px;
+            }
+
+            .nav-link:hover,
+            .nav-link.active {
+                background: #E0E0E0;
+                color: #000;
+            }
+
+            /* Hamburger animation */
+            .hamburger.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2.8rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+
+            .project-info {
+                padding: 15px;
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+            }
+
+            .project-description {
+                font-size: 1rem;
+            }
+
+            .next-button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
+            <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="logo">Pavilion Studio</h1>
+            <p class="tagline">Designing Tomorrow, Today</p>
+            <button class="cta-button" id="seeWorkBtn">See Our Work</button>
+
+            <div class="scroll-indicator">
+                <p>Scroll down to see our projects</p>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects-section" id="projects">
+            <div class="project-container">
+                <div class="project-slider" id="projectSlider">
+                    <!-- Project slides will be generated here -->
+                </div>
+            </div>
+
+            <div class="project-nav" id="projectNav"></div>
+
+            <button class="next-button" id="nextProjectBtn">
+                Next Project <i class="fas fa-arrow-right"></i>
+            </button>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const seeWorkBtn = document.getElementById('seeWorkBtn');
+            const nextProjectBtn = document.getElementById('nextProjectBtn');
+            const projectsSection = document.getElementById('projects');
+            const projectSlider = document.getElementById('projectSlider');
+            const projectNav = document.getElementById('projectNav');
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Sample project data with multiple images
+            const projects = [
+                {
+                    id: 0,
+                    images: [
+                        "assets/selectionne/selectionne-01.jpg",
+                        "assets/02.jpg",
+                        "assets/03.jpg",
+                        "assets/04.jpg",
+                        "assets/05.jpg"
+                    ],
+                    title: "SELÉCTIONNÉ",
+                    date: "2025",
+                    location: "Amsterdam, The Netherlands",
+                    area: "117m²",
+                    description: "Curated Collection Gallery"
+                },
+                {
+                    id: 1,
+                    images: [
+                        "assets/vivien/vivien-thumbnail.jpg",
+                        "assets/vivien/vivien-00.jpg",
+                        "assets/vivien/vivien-02.jpg",
+                        "assets/vivien/vivien-03.jpg",
+                        "assets/vivien/vivien-04.jpg"
+                    ],
+                    title: "VIVIEN",
+                    date: "2025",
+                    location: "Prishtina, Kosovo",
+                    area: "132.5m²",
+                    description: "Dental and Aesthetic Clinic"
+                },
+                {
+                    id: 2,
+                    images: [
+                        "assets/blueonix/blueonix-08.jpg",
+                        "assets/blueonix-01.jpg",
+                        "assets/blueonix-02.jpg",
+                        "assets/blueonix-03.jpg",
+                        "assets/blueonix-04.jpg"
+                    ],
+                    title: "BLUEONIX",
+                    date: "2025",
+                    location: "Balkan Region",
+                    area: "239m²",
+                    description: "Contemporary Office Space"
+                }
+            ];
+
+            let currentProjectIndex = 0;
+
+            // Toggle mobile menu
+            hamburger.addEventListener('click', function () {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            navLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+
+            // Create project slides
+            function createProjectSlides() {
+                projectSlider.innerHTML = '';
+                projects.forEach((project, index) => {
+                    const slide = document.createElement('div');
+                    slide.classList.add('project-slide');
+                    if (index === currentProjectIndex) {
+                        slide.classList.add('active');
+                    }
+
+                    slide.innerHTML = `
+                        <div class="project-image" style="background-image: url('${project.images[0]}')" data-project-id="${project.id}"></div>
+                        <div class="project-info">
+                            <h2 class="project-title" data-project-id="${project.id}">${project.title}</h2>
+                            <div class="project-details">
+                                <span class="project-detail"><i class="far fa-calendar"></i> ${project.date}</span>
+                                <span class="project-detail"><i class="fas fa-map-marker-alt"></i> ${project.location}</span>
+                                <span class="project-detail"><i class="fas fa-ruler-combined"></i> ${project.area}</span>
+                            </div>
+                            <p class="project-description">${project.description}</p>
+                        </div>
+                    `;
+
+                    projectSlider.appendChild(slide);
+                });
+
+                // Add click event listeners to project images and titles
+                const projectImages = document.querySelectorAll('.project-image');
+                const projectTitles = document.querySelectorAll('.project-title');
+
+                projectImages.forEach(image => {
+                    image.addEventListener('click', function () {
+                        const projectId = this.getAttribute('data-project-id');
+                        window.location.href = `projects.html?project=${projectId}`;
+                    });
+                });
+
+                projectTitles.forEach(title => {
+                    title.addEventListener('click', function () {
+                        const projectId = this.getAttribute('data-project-id');
+                        window.location.href = `projects.html?project=${projectId}`;
+                    });
+                });
+            }
+
+            // Create navigation dots
+            function createNavDots() {
+                projectNav.innerHTML = '';
+                projects.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('nav-dot');
+                    if (index === currentProjectIndex) {
+                        dot.classList.add('active');
+                    }
+                    dot.addEventListener('click', () => {
+                        navigateToProject(index);
+                    });
+                    projectNav.appendChild(dot);
+                });
+            }
+
+            // Update navigation dots
+            function updateNavDots() {
+                const dots = document.querySelectorAll('.nav-dot');
+                dots.forEach((dot, index) => {
+                    if (index === currentProjectIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            // Navigate to specific project
+            function navigateToProject(index) {
+                if (index === currentProjectIndex) return;
+
+                const currentSlide = document.querySelector('.project-slide.active');
+                const nextSlide = document.querySelectorAll('.project-slide')[index];
+
+                // Set exit animation for current slide
+                currentSlide.classList.remove('active');
+                currentSlide.classList.add('exit');
+
+                // Set next slide to active with delay
+                setTimeout(() => {
+                    nextSlide.classList.add('active');
+                    nextSlide.classList.remove('exit');
+
+                    // Reset all other slides
+                    document.querySelectorAll('.project-slide').forEach((slide, i) => {
+                        if (i !== index) {
+                            slide.classList.remove('active');
+                            slide.classList.remove('exit');
+                        }
+                    });
+
+                    currentProjectIndex = index;
+                    updateNavDots();
+                }, 300);
+            }
+
+            // Next project button functionality
+            nextProjectBtn.addEventListener('click', function () {
+                const nextIndex = (currentProjectIndex + 1) % projects.length;
+                navigateToProject(nextIndex);
+            });
+
+            // Scroll to projects when "See Our Work" is clicked
+            seeWorkBtn.addEventListener('click', function () {
+                projectsSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Initialize the projects and navigation
+            createProjectSlides();
+            createNavDots();
+        });
+    </script>
+</body>
+
+</html>
