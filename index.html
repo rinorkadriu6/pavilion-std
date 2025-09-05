@@ -28,6 +28,46 @@
             padding: 0;
         }
 
+        /* Logo Splash Screen */
+        .logo-splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #E0E0E0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 1.5s ease-out;
+        }
+
+        .splash-logo {
+            width: 80%;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeInOut 3s ease-in-out forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
         /* Navigation */
         .navbar {
             position: fixed;
@@ -35,6 +75,8 @@
             right: 0;
             z-index: 1000;
             padding: 30px;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
         .nav-menu {
@@ -88,89 +130,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            position: relative;
-            background: #E0E0E0;
-        }
-
-        .logo {
-            font-size: 5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: 4px;
-            color: #000;
-        }
-
-        .tagline {
-            font-size: 1.8rem;
-            margin-bottom: 40px;
-            color: #333;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-
-        .cta-button {
-            background: #000;
-            color: #E0E0E0;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 80px;
-            font-family: 'Bahnschrift', sans-serif;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            text-align: center;
-            color: #555;
-        }
-
-        .scroll-indicator p {
-            margin-bottom: 10px;
-            font-size: 1rem;
-            letter-spacing: 1px;
-        }
-
-        .fa-chevron-down {
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-10px);
-            }
-
-            60% {
-                transform: translateY(-5px);
-            }
-        }
-
         /* Projects Section */
         .projects-section {
             min-height: 100vh;
@@ -181,6 +140,8 @@
             align-items: center;
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
         .project-container {
@@ -225,6 +186,11 @@
             background-size: cover;
             background-position: center;
             cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .project-slide:hover .project-image {
+            transform: scale(1.03);
         }
 
         .project-info {
@@ -232,9 +198,23 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.01);
+            /* Reduced opacity to allow blur to show through */
+            backdrop-filter: blur(3px);
+            /* This adds the blur effect */
+            -webkit-backdrop-filter: blur(10px);
+            /* Safari support */
             padding: 30px;
-            color: #E0E0E0;
+            color: #FFFFFF;
+            /* Changed back to white for better readability on dark background */
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.4s ease;
+        }
+
+        .project-slide:hover .project-info {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .project-title {
@@ -280,6 +260,8 @@
             align-items: center;
             gap: 10px;
             font-family: 'Bahnschrift', sans-serif;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
         .next-button:hover {
@@ -296,6 +278,8 @@
             display: flex;
             gap: 12px;
             z-index: 10;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
         .nav-dot {
@@ -411,12 +395,8 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .logo {
-                font-size: 3.5rem;
-            }
-
-            .tagline {
-                font-size: 1.4rem;
+            .splash-logo {
+                width: 90%;
             }
 
             .project-title {
@@ -435,6 +415,8 @@
 
             .project-info {
                 padding: 20px;
+                opacity: 1;
+                transform: translateY(0);
             }
 
             .footer-content {
@@ -492,17 +474,8 @@
         }
 
         @media (max-width: 480px) {
-            .logo {
-                font-size: 2.8rem;
-            }
-
-            .tagline {
-                font-size: 1.2rem;
-            }
-
-            .cta-button {
-                padding: 12px 30px;
-                font-size: 1rem;
+            .splash-logo {
+                width: 95%;
             }
 
             .project-info {
@@ -526,6 +499,11 @@
 </head>
 
 <body>
+    <!-- Logo Splash Screen -->
+    <div class="logo-splash" id="logoSplash">
+        <img src="assets/Logo B&W.png" alt="Pavilion Studio Logo" class="splash-logo">
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="hamburger" id="hamburger">
@@ -541,18 +519,6 @@
     </nav>
 
     <div class="container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1 class="logo">Pavilion Studio</h1>
-            <p class="tagline">Designing Tomorrow, Today</p>
-            <button class="cta-button" id="seeWorkBtn">See Our Work</button>
-
-            <div class="scroll-indicator">
-                <p>Scroll down to see our projects</p>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </section>
-
         <!-- Projects Section -->
         <section class="projects-section" id="projects">
             <div class="project-container">
@@ -571,7 +537,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const seeWorkBtn = document.getElementById('seeWorkBtn');
+            const logoSplash = document.getElementById('logoSplash');
             const nextProjectBtn = document.getElementById('nextProjectBtn');
             const projectsSection = document.getElementById('projects');
             const projectSlider = document.getElementById('projectSlider');
@@ -579,6 +545,9 @@
             const hamburger = document.getElementById('hamburger');
             const navMenu = document.getElementById('navMenu');
             const navLinks = document.querySelectorAll('.nav-link');
+            const navbar = document.querySelector('.navbar');
+            const nextButton = document.querySelector('.next-button');
+            const navDots = document.querySelector('.project-nav');
 
             // Sample project data with multiple images
             const projects = [
@@ -630,6 +599,23 @@
             ];
 
             let currentProjectIndex = 0;
+            let autoRotateInterval;
+
+            // Hide splash screen and show content after delay
+            setTimeout(() => {
+                logoSplash.style.opacity = '0';
+
+                setTimeout(() => {
+                    logoSplash.style.display = 'none';
+                    navbar.style.opacity = '1';
+                    projectsSection.style.opacity = '1';
+                    nextButton.style.opacity = '1';
+                    navDots.style.opacity = '1';
+
+                    // Start auto-rotating projects
+                    startAutoRotation();
+                }, 1500);
+            }, 3000); // Show splash for 3 seconds (matches CSS animation)
 
             // Toggle mobile menu
             hamburger.addEventListener('click', function () {
@@ -700,7 +686,9 @@
                         dot.classList.add('active');
                     }
                     dot.addEventListener('click', () => {
+                        clearInterval(autoRotateInterval);
                         navigateToProject(index);
+                        startAutoRotation();
                     });
                     projectNav.appendChild(dot);
                 });
@@ -747,15 +735,21 @@
                 }, 300);
             }
 
+            // Start auto-rotation of projects
+            function startAutoRotation() {
+                clearInterval(autoRotateInterval);
+                autoRotateInterval = setInterval(() => {
+                    const nextIndex = (currentProjectIndex + 1) % projects.length;
+                    navigateToProject(nextIndex);
+                }, 5000); // Change project every 5 seconds
+            }
+
             // Next project button functionality
             nextProjectBtn.addEventListener('click', function () {
+                clearInterval(autoRotateInterval);
                 const nextIndex = (currentProjectIndex + 1) % projects.length;
                 navigateToProject(nextIndex);
-            });
-
-            // Scroll to projects when "See Our Work" is clicked
-            seeWorkBtn.addEventListener('click', function () {
-                projectsSection.scrollIntoView({ behavior: 'smooth' });
+                startAutoRotation();
             });
 
             // Initialize the projects and navigation
