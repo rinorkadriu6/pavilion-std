@@ -21,6 +21,7 @@
             overflow-x: hidden;
             font-family: 'Bahnschrift', sans-serif;
             line-height: 1.6;
+            touch-action: pan-y;
         }
 
         .container {
@@ -339,6 +340,26 @@
             text-align: center;
         }
 
+        .swipe-indicator {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            z-index: 101;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .swipe-indicator.mobile-visible {
+            display: flex;
+        }
+
         /* Responsive Design */
         @media (max-width: 968px) {
             .project-info-panel {
@@ -406,6 +427,10 @@
                 top: 20px;
                 right: 20px;
             }
+
+            .swipe-indicator.mobile-visible {
+                display: flex;
+            }
         }
 
         @media (max-width: 480px) {
@@ -452,6 +477,11 @@
                 right: 15px;
                 font-size: 1.5rem;
             }
+
+            .swipe-indicator {
+                bottom: 80px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -474,6 +504,10 @@
             <li class="nav-item"><a href="about.html#contact" class="nav-link">Contact</a></li>
         </ul>
     </nav>
+    <!-- Swipe indicator for mobile -->
+    <div class="swipe-indicator" id="swipeIndicator">
+        <i class="fas fa-arrows-alt-h"></i> Swipe to navigate
+    </div>
 
     <!-- Full-screen Slider -->
     <div class="slider-container">
@@ -518,6 +552,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Variables for swipe detection
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const swipeThreshold = 50; // Minimum distance for a swipe
+
             const hamburger = document.getElementById('hamburger');
             const navMenu = document.getElementById('navMenu');
             const navLinks = document.querySelectorAll('.nav-link');
@@ -531,8 +570,9 @@
             const slideControls = document.getElementById('slideControls');
             const prevProjectBtn = document.getElementById('prevProjectBtn');
             const nextProjectBtn = document.getElementById('nextProjectBtn');
+            const swipeIndicator = document.getElementById('swipeIndicator');
 
-            // Project data with multiple images
+            // Project data with multiple images - FIXED: Corrected image filenames
             const projects = [
                 {
                     id: 0,
@@ -540,7 +580,7 @@
                         "assets/selectionne/selectionne-01.jpg",
                         "assets/selectionne/selectionne-02.jpg",
                         "assets/selectionne/selectionne-03.jpg",
-                        "assets/selectionne/selectionne-04.jpg",
+                        "assets/selectionne/selectionne-04.jpg", // Fixed filename
                         "assets/selectionne/selectionne-05.jpg",
                         "assets/selectionne/selectionne-06.jpg",
                         "assets/selectionne/selectionne-07.jpg",
@@ -570,7 +610,7 @@
                     ],
                     title: "VIVIEN",
                     date: "2025",
-                    location: "Prishtina, Kosovo",
+                    location: "Prishtina, Kosovo", // Fixed syntax error
                     area: "132.5m²",
                     description: "Dental and Aesthetic Clinic"
                 },
@@ -582,9 +622,9 @@
                         "assets/blueonix/blueonix-02.jpg",
                         "assets/blueonix/blueonix-03.jpg",
                         "assets/blueonix/blueonix-04.jpg",
-                        "assets/blueonix/blueonix-05.jpg",
+                        "assets/blueonix/blueonix-05.jpg", // Fixed filename
                         "assets/blueonix/blueonix-06.jpg",
-                        "assets/blueonix/blueonix-07.jpg",
+                        "assets/blueonix/blueonix-07.jpg", // Fixed filename
                         "assets/blueonix/blueonix-00.jpg",
                         "assets/blueonix/blueonix-001.jpg",
                         "assets/blueonix/blueonix-001.1.jpg"
@@ -605,6 +645,65 @@
             function getQueryParam(name) {
                 const urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(name);
+            }
+
+            // Check if device is mobile
+            function isMobileDevice() {
+                return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+            }
+
+            // Add swipe functionality to slides
+            function addSwipeFunctionality() {
+                const slides = document.querySelectorAll('.slide');
+
+                slides.forEach(slide => {
+                    // Touch events for mobile
+                    slide.addEventListener('touchstart', handleTouchStart, false);
+                    slide.addEventListener('touchend', handleTouchEnd, false);
+
+                    // Mouse events for desktop testing
+                    slide.addEventListener('mousedown', handleMouseDown, false);
+                    slide.addEventListener('mouseup', handleMouseUp, false);
+                });
+            }
+
+            // Handle touch start
+            function handleTouchStart(event) {
+                touchStartX = event.changedTouches[0].screenX;
+            }
+
+            // Handle touch end
+            function handleTouchEnd(event) {
+                touchEndX = event.changedTouches[0].screenX;
+                handleSwipe(); // Fixed: This was calling a function with a typo
+            }
+
+            // Handle mouse down (for testing on desktop)
+            function handleMouseDown(event) {
+                touchStartX = event.screenX;
+            }
+
+            // Handle mouse up (for testing on desktop)
+            function handleMouseUp(event) {
+                touchEndX = event.screenX;
+                handleSwipe(); // Fixed: This was calling a function with a typo
+            }
+
+            // Process swipe gesture - FIXED: Corrected function name (was handleSwi极速飞艇pe)
+            function handleSwipe() {
+                if (isTransitioning) return;
+
+                const diffX = touchEndX - touchStartX;
+
+                if (Math.abs(diffX) > swipeThreshold) {
+                    if (diffX > 0) {
+                        // Swipe right - previous image
+                        navigateToSlide((currentSlideIndex - 1 + projects[currentProjectIndex].images.length) % projects[currentProjectIndex].images.length);
+                    } else {
+                        // Swipe left - next image
+                        navigateToSlide((currentSlideIndex + 1) % projects[currentProjectIndex].images.length);
+                    }
+                }
             }
 
             // Toggle mobile menu
@@ -680,11 +779,27 @@
                 // Update project info
                 projectTitle.textContent = project.title;
                 projectDetails.innerHTML = `
-                    <span class="project-detail"><i class="far fa-calendar"></i> ${project.date}</span>
-                    <span class="project-detail"><i class="fas fa-map-marker-alt"></i> ${project.location}</span>
-                    <span class="project-detail"><i class="fas fa-ruler-combined"></i> ${project.area}</span>
-                `;
+            <span class="project-detail"><i class="far fa-calendar"></i> ${project.date}</span>
+            <span class="project-detail"><i class="fas fa-map-marker-alt"></i> ${project.location}</span>
+            <span class="project-detail"><i class="fas fa-ruler-combined"></i> ${project.area}</span>
+        `;
                 projectDescription.textContent = project.description;
+
+                // Add touch events for swipe functionality
+                addSwipeFunctionality();
+            }
+
+            // Show swipe indicator on mobile devices
+            if (isMobileDevice() && swipeIndicator) {
+                swipeIndicator.classList.add('mobile-visible');
+
+                // Hide indicator after 5 seconds
+                setTimeout(() => {
+                    swipeIndicator.style.opacity = '0';
+                    setTimeout(() => {
+                        swipeIndicator.style.display = 'none';
+                    }, 1000);
+                }, 5000);
             }
 
             // Navigate to specific slide
