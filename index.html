@@ -135,7 +135,7 @@
             font-size: 1.5rem;
             padding: 12px 25px;
             border-radius: 25px;
-            transition: all 0.3s ease;
+            transition: all 极速飞艇 0.3s ease;
             display: inline-block;
         }
 
@@ -156,7 +156,7 @@
             font-size: 1.8rem;
             cursor: pointer;
             z-index: 1002;
-            transition: color 极速飞艇 0.3s ease;
+            transition: color 0.3s ease;
             width: 40px;
             height: 40px;
             display: flex;
@@ -251,9 +251,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             padding: 30px;
             color: #FFFFFF;
             opacity: 0;
@@ -292,6 +291,7 @@
             max-width: 600px;
         }
 
+        /* Next Button Styles - UPDATED FOR MOBILE */
         .next-button {
             position: absolute;
             bottom: 40px;
@@ -299,7 +299,6 @@
             z-index: 10;
             background: rgba(0, 0, 0, 0.8);
             color: #E0E0E0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 12px 24px;
             font-size: 1.1rem;
             border-radius: 50px;
@@ -310,11 +309,23 @@
             gap: 10px;
             font-family: 'Bahnschrift', sans-serif;
             opacity: 0;
+            border: none;
         }
 
         .next-button:hover {
             background: rgba(0, 0, 0, 1);
             transform: translateY(-2px);
+        }
+
+        .next-button .button-text {
+            display: inline;
+        }
+
+        .next-button .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
         }
 
         /* Navigation Dots */
@@ -459,6 +470,18 @@
             .next-button {
                 bottom: 20px;
                 right: 20px;
+                padding: 14px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .next-button .button-text {
+                display: none;
+            }
+
+            .next-button .icon {
+                margin: 0;
+                font-size: 1.2rem;
             }
 
             .project-info {
@@ -498,8 +521,11 @@
             }
 
             .next-button {
-                padding: 10px 20px;
-                font-size: 1rem;
+                padding: 12px;
+                width: 46px;
+                height: 46px;
+                bottom: 15px;
+                right: 15px;
             }
             
             .nav-menu {
@@ -554,7 +580,8 @@
             <div class="project-nav" id="projectNav"></div>
 
             <button class="next-button" id="nextProjectBtn">
-                Next Project <i class="fas fa-arrow-right"></i>
+                <span class="button-text">Next Project</span>
+                <span class="icon"><i class="fas fa-arrow-right"></i></span>
             </button>
         </section>
     </div>

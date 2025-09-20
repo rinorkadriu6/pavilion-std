@@ -56,7 +56,7 @@
             display: block;
             height: 3px;
             width: 100%;
-            background-color: #000;
+            background-color: #fff;
             border-radius: 3px;
             transition: all 0.3s ease;
         }
@@ -115,7 +115,7 @@
             font-size: 1.8rem;
             cursor: pointer;
             z-index: 1002;
-            transition: color 极速飞艇 0.3s ease;
+            transition: color 0.3s ease;
             width: 40px;
             height: 40px;
             display: flex;
@@ -142,13 +142,12 @@
             transform: translateY(-9px) rotate(-45deg);
         }
 
-        /* Header */
+        /* Header - FIXED POSITION IN LEFT CORNER */
         .header {
             position: fixed;
             top: 30px;
             left: 30px;
             z-index: 1000;
-            mix-blend-mode: difference;
         }
 
         .logo {
@@ -158,7 +157,7 @@
             color: #fff;
         }
 
-        /* Full-screen Slider */
+        /* Full-screen Slider - FIXED FOR MOBILE */
         .slider-container {
             position: fixed;
             top: 0;
@@ -359,6 +358,14 @@
             display: flex;
         }
 
+        @media (min-width: 769px) {
+            /* Desktop-specific styles */
+            .slide {
+                width: 2000px;
+                background-size: cover;
+            }
+        }
+
         @media (max-width: 968px) {
             .project-info-panel {
                 max-width: 400px;
@@ -370,121 +377,227 @@
         }
 
         @media (max-width: 768px) {
-            .header {
-                left: 20px;
-                top: 20px;
-            }
+    /* Mobile-specific styles - WHITE BACKGROUND & NEW LAYOUT */
+    body {
+        background: #ffffff;
+        color: #000000;
+    }
+    
+    .slide {
+        background-size: contain;
+        background-color: #fff;
+    }
+    
+    .header {
+        left: 20px;
+        top: 20px;
+    }
 
-            .logo {
-                font-size: 1.2rem;
-            }
+    .logo {
+        font-size: 1.2rem;
+        color: #000;
+    }
+    
+    .hamburger span {
+        background-color: #000;
+    }
 
-            .project-info-panel {
-                left: 20px;
-                padding: 20px;
-                max-width: calc(100% - 40px);
-                top: 120px;
-                transform: none;
-            }
+    /* Slider container adjustment */
+    .slider-container {
+        height: 50vh; /* Reduced height to make room for description */
+    }
 
-            .project-title {
-                font-size: 1.8rem;
-            }
+    /* Project info panel positioned below images but above thumbnails */
+    .project-info-panel {
+        position: fixed;
+        top: 50vh; /* Positioned right below the image slider */
+        left: 0;
+        transform: none;
+        background: #fff;
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        z-index: 90; /* Lower than thumbnails to allow interaction */
+    }
+    
+    .project-title {
+        font-size: 1.8rem;
+        color: #000;
+    }
+    
+    .project-detail {
+        color: #333;
+    }
+    
+    .project-description {
+        color: #333;
+    }
 
-            .thumbnail-nav {
-                left: 20px;
-                bottom: 20px;
-                max-width: calc(100vw - 40px);
-            }
+    /* Thumbnail navigation positioned below description */
+    .thumbnail-nav {
+        left: 20px;
+        bottom: 80px; /* Positioned above project navigation */
+        max-width: calc(100vw - 40px);
+        z-index: 100; /* Higher than description panel */
+    }
 
-            .thumbnail {
-                width: 60px;
-                height: 60px;
-            }
+    .thumbnail {
+        width: 60px;
+        height: 60px;
+        border-color: #000;
+    }
+    
+    .thumbnail:hover,
+    .thumbnail.active {
+        border-color: #000;
+    }
 
-            .project-nav {
-                bottom: 120px;
-                right: 20px;
-            }
+    /* Project navigation at the bottom */
+    .project-nav {
+        bottom: 20px;
+        right: 20px;
+    }
 
-            .nav-button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
+    .nav-button {
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+    }
 
-            .slide-controls {
-                bottom: 20px;
-                right: 20px;
-            }
+    .nav-button:hover {
+        background: rgba(0, 0, 0, 1);
+    }
 
-            .footer {
-                bottom: 20px;
-            }
+    .slide-controls {
+        bottom: 90px;
+        right: 20px;
+    }
+    
+    .slide-dot {
+        background: rgba(0, 0, 0, 0.3);
+    }
+    
+    .slide-dot.active {
+        background: #000;
+    }
 
-            .hamburger {
-                top: 20px;
-                right: 20px;
-            }
+    .footer {
+        bottom: 20px;
+        color: rgba(0, 0, 0, 0.7);
+    }
 
-            .swipe-indicator.mobile-visible {
-                display: flex;
-            }
-        }
+    .hamburger {
+        top: 20px;
+        right: 20px;
+    }
+    
+    .nav-menu {
+        background: rgba(255, 255, 255, 0.95);
+    }
+    
+    .nav-link {
+        color: #333;
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        background: #000;
+        color: #fff;
+    }
+    
+    .close-menu {
+        color: #333;
+    }
+    
+    .close-menu:hover {
+        color: #000;
+        background: rgba(0, 0, 0, 0.1);
+    }
 
-        @media (max-width: 480px) {
-            .project-info-panel {
-                padding: 15px;
-                top: 100px;
-            }
+    .swipe-indicator.mobile-visible {
+        display: flex;
+        color: rgba(0, 0, 0, 0.7);
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid #eee;
+        bottom: 130px;
+    }
+}
 
-            .project-title {
-                font-size: 1.5rem;
-            }
+@media (max-width: 480px) {
+    .project-info-panel {
+        padding: 15px;
+        top: 60vh;
+    }
 
-            .project-description {
-                font-size: 1rem;
-            }
+    .project-title {
+        font-size: 1.5rem;
+    }
 
-            .thumbnail {
-                width: 50px;
-                height: 50px;
-            }
+    .project-description {
+        font-size: 1rem;
+    }
 
-            .project-nav {
-                flex-direction: column;
-                align-items: flex-end;
-                bottom: 100px;
-            }
+    .thumbnail {
+        width: 50px;
+        height: 50px;
+    }
 
-            .nav-button {
-                padding: 8px 15px;
-                font-size: 0.8rem;
-            }
+    .project-nav {
+        flex-direction: column;
+        align-items: flex-end;
+        bottom: 20px;
+    }
 
-            .nav-menu {
-                width: 85%;
-            }
+    .nav-button {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
 
-            .nav-link {
-                font-size: 1.2rem;
-                padding: 8px 16px;
-            }
+    .nav-menu {
+        width: 85%;
+    }
 
-            .close-menu {
-                top: 15px;
-                right: 15px;
-                font-size: 1.5rem;
-            }
+    .nav-link {
+        font-size: 1.2rem;
+        padding: 8px 16px;
+    }
 
-            .swipe-indicator {
-                bottom: 80px;
-                font-size: 0.8rem;
-            }
-        }
+    .close-menu {
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+    }
+
+    .swipe-indicator {
+        bottom: 130px;
+        font-size: 0.8rem;
+    }
+    
+    .thumbnail-nav {
+        bottom: 80px;
+    }
+    
+    .slide-controls {
+        bottom: 90px;
+    }
+    
+    .slider-container {
+        height: 45vh;
+    }
+    
+    .project-info-panel {
+        top: 45vh;
+    }
+}
     </style>
 </head>
 
 <body>
+    <div class="header">
+        <div class="logo">PAVILION</div>
+    </div>
+
     <nav class="navbar">
         <div class="hamburger" id="hamburger">
             <span></span>
@@ -537,35 +650,30 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let touchStartX = 0;
-            let touchEndX = 0;
-            const swipeThreshold = 50;
+    document.addEventListener('DOMContentLoaded', function () {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const swipeThreshold = 50;
 
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('navMenu');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const closeMenu = document.getElementById('closeMenu');
-            const slider = document.getElementById('slider');
-            const projectInfoPanel = document.getElementById('projectInfoPanel');
-            const projectTitle = document.getElementById('projectTitle');
-            const projectDetails = document.getElementById('projectDetails');
-            const projectDescription = document.getElementById('projectDescription');
-            const thumbnailNav = document.getElementById('thumbnailNav');
-            const slideControls = document.getElementById('slideControls');
-            const prevProjectBtn = document.getElementById('prevProjectBtn');
-            const nextProjectBtn = document.getElementById('nextProjectBtn');
-            const swipeIndicator = document.getElementById('swipeIndicator');
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const closeMenu = document.getElementById('closeMenu');
+        const slider = document.getElementById('slider');
+        const projectInfoPanel = document.getElementById('projectInfoPanel');
+        const projectTitle = document.getElementById('projectTitle');
+        const projectDetails = document.getElementById('projectDetails');
+        const projectDescription = document.getElementById('projectDescription');
+        const thumbnailNav = document.getElementById('thumbnailNav');
+        const slideControls = document.getElementById('slideControls');
+        const prevProjectBtn = document.getElementById('prevProjectBtn');
+        const nextProjectBtn = document.getElementById('nextProjectBtn');
+        const swipeIndicator = document.getElementById('swipeIndicator');
 
-            function toggleProjectInfoPanel(show) {
-                if (show) {
-                    projectInfoPanel.style.display = 'block';
-                } else {
-                    projectInfoPanel.style.display = 'none';
-                }
-            }
+        // REMOVED: Function that toggles project info panel visibility
+        // The description will now always be visible
 
-            const projects = [
+        const projects = [
                 {
                     id: 0,
                     images: [
@@ -628,222 +736,219 @@
                 }
             ];
 
-            let currentProjectIndex = 0;
-            let currentSlideIndex = 0;
-            let isTransitioning = false;
+        let currentProjectIndex = 0;
+        let currentSlideIndex = 0;
+        let isTransitioning = false;
 
-            function getQueryParam(name) {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(name);
-            }
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
 
-            function isMobileDevice() {
-                return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-            }
+        function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+        }
 
-            function addSwipeFunctionality() {
-                const slides = document.querySelectorAll('.slide');
+        function addSwipeFunctionality() {
+            const slides = document.querySelectorAll('.slide');
 
-                slides.forEach(slide => {
-                    slide.addEventListener('touchstart', handleTouchStart, false);
-                    slide.addEventListener('touchend', handleTouchEnd, false);
+            slides.forEach(slide => {
+                slide.addEventListener('touchstart', handleTouchStart, false);
+                slide.addEventListener('touchend', handleTouchEnd, false);
 
-                    slide.addEventListener('mousedown', handleMouseDown, false);
-                    slide.addEventListener('mouseup', handleMouseUp, false);
-                });
-            }
-
-            function handleTouchStart(event) {
-                touchStartX = event.changedTouches[0].screenX;
-            }
-
-            function handleTouchEnd(event) {
-                touchEndX = event.changedTouches[0].screenX;
-                handleSwipe();
-            }
-
-            function handleMouseDown(event) {
-                touchStartX = event.screenX;
-            }
-
-            function handleMouseUp(event) {
-                touchEndX = event.screenX;
-                handleSwipe();
-            }
-
-            function handleSwipe() {
-                if (isTransitioning) return;
-
-                const diffX = touchEndX - touchStartX;
-
-                if (Math.abs(diffX) > swipeThreshold) {
-                    if (diffX > 0) {
-                        navigateToSlide((currentSlideIndex - 1 + projects[currentProjectIndex].images.length) % projects[currentProjectIndex].images.length);
-                    } else {
-                        navigateToSlide((currentSlideIndex + 1) % projects[currentProjectIndex].images.length);
-                    }
-                }
-            }
-
-            hamburger.addEventListener('click', function () {
-                hamburger.classList.toggle('active');
-                navMenu.classList.toggle('active');
+                slide.addEventListener('mousedown', handleMouseDown, false);
+                slide.addEventListener('mouseup', handleMouseUp, false);
             });
+        }
 
-            navLinks.forEach(link => {
-                link.addEventListener('click', function () {
-                    hamburger.classList.remove('active');
-                    navMenu.classList.remove('active');
-                });
-            });
+        function handleTouchStart(event) {
+            touchStartX = event.changedTouches[0].screenX;
+        }
 
-            function createSlider() {
-                const requestedProject = getQueryParam('project');
-                if (requestedProject !== null) {
-                    const projectIndex = parseInt(requestedProject);
-                    if (!isNaN(projectIndex) && projectIndex >= 0 && projectIndex < projects.length) {
-                        currentProjectIndex = projectIndex;
-                    }
-                }
+        function handleTouchEnd(event) {
+            touchEndX = event.changedTouches[0].screenX;
+            handleSwipe();
+        }
 
-                const project = projects[currentProjectIndex];
+        function handleMouseDown(event) {
+            touchStartX = event.screenX;
+        }
 
-                slider.innerHTML = '';
-                thumbnailNav.innerHTML = '';
-                slideControls.innerHTML = '';
+        function handleMouseUp(event) {
+            touchEndX = event.screenX;
+            handleSwipe();
+        }
 
-                project.images.forEach((image, index) => {
-                    const slide = document.createElement('div');
-                    slide.className = 'slide';
-                    slide.style.backgroundImage = `url('${image}')`;
-                    if (index === currentSlideIndex) {
-                        slide.classList.add('active');
-                    }
-                    slider.appendChild(slide);
+        function handleSwipe() {
+            if (isTransitioning) return;
 
-                    const thumbnail = document.createElement('div');
-                    thumbnail.className = 'thumbnail';
-                    if (index === currentSlideIndex) {
-                        thumbnail.classList.add('active');
-                    }
-                    thumbnail.innerHTML = `<img src="${image}" alt="Thumbnail ${index + 1}">`;
-                    thumbnail.addEventListener('click', () => {
-                        if (!isTransitioning) {
-                            navigateToSlide(index);
-                        }
-                    });
-                    thumbnailNav.appendChild(thumbnail);
+            const diffX = touchEndX - touchStartX;
 
-                    const dot = document.createElement('div');
-                    dot.className = 'slide-dot';
-                    if (index === currentSlideIndex) {
-                        dot.classList.add('active');
-                    }
-                    dot.addEventListener('click', () => {
-                        if (!isTransitioning) {
-                            navigateToSlide(index);
-                        }
-                    });
-                    slideControls.appendChild(dot);
-                });
-
-                projectTitle.textContent = project.title;
-                projectDetails.innerHTML = `
-            <span class="project-detail"><i class="far fa-calendar"></i> ${project.date}</span>
-            <span class="project-detail"><i class="fas fa-map-marker-alt"></i> ${project.location}</span>
-            <span class="project-detail"><i class="fas fa-ruler-combined"></i> ${project.area}</span>
-        `;
-                projectDescription.textContent = project.description;
-
-                addSwipeFunctionality();
-            }
-
-            if (isMobileDevice() && swipeIndicator) {
-                swipeIndicator.classList.add('mobile-visible');
-
-                setTimeout(() => {
-                    swipeIndicator.style.opacity = '0';
-                    setTimeout(() => {
-                        swipeIndicator.style.display = 'none';
-                    }, 1000);
-                }, 5000);
-            }
-
-            function navigateToSlide(index) {
-                if (isTransitioning || index === currentSlideIndex) return;
-
-                isTransitioning = true;
-
-                const slides = document.querySelectorAll('.slide');
-                const thumbnails = document.querySelectorAll('.thumbnail');
-                const dots = document.querySelectorAll('.slide-dot');
-
-                slides[currentSlideIndex].style.opacity = 0;
-
-                setTimeout(() => {
-                    slides[currentSlideIndex].classList.remove('active');
-                    thumbnails[currentSlideIndex].classList.remove('active');
-                    dots[currentSlideIndex].classList.remove('active');
-
-                    currentSlideIndex = index;
-
-                    slides[currentSlideIndex].classList.add('active');
-                    thumbnails[currentSlideIndex].classList.add('active');
-                    dots[currentSlideIndex].classList.add('active');
-
-                    if (currentSlideIndex === 0) {
-                        toggleProjectInfoPanel(true);
-                    } else {
-                        toggleProjectInfoPanel(false);
-                    }
-
-                    setTimeout(() => {
-                        slides[currentSlideIndex].style.opacity = 1;
-                        isTransitioning = false;
-                    }, 50);
-                }, 800);
-            }
-
-            function navigateToProject(index) {
-                if (isTransitioning) return;
-
-                currentProjectIndex = index;
-                currentSlideIndex = 0;
-                createSlider();
-
-                const newUrl = `${window.location.pathname}?project=${currentProjectIndex}`;
-                window.history.pushState({}, '', newUrl);
-            }
-
-            prevProjectBtn.addEventListener('click', () => {
-                if (!isTransitioning) {
-                    navigateToProject((currentProjectIndex - 1 + projects.length) % projects.length);
-                }
-            });
-
-            nextProjectBtn.addEventListener('click', () => {
-                if (!isTransitioning) {
-                    navigateToProject((currentProjectIndex + 1) % projects.length);
-                }
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (isTransitioning) return;
-
-                if (e.key === 'ArrowLeft') {
+            if (Math.abs(diffX) > swipeThreshold) {
+                if (diffX > 0) {
                     navigateToSlide((currentSlideIndex - 1 + projects[currentProjectIndex].images.length) % projects[currentProjectIndex].images.length);
-                } else if (e.key === 'ArrowRight') {
+                } else {
                     navigateToSlide((currentSlideIndex + 1) % projects[currentProjectIndex].images.length);
-                } else if (e.key === 'ArrowUp') {
-                    navigateToProject((currentProjectIndex - 1 + projects.length) % projects.length);
-                } else if (e.key === 'ArrowDown') {
-                    navigateToProject((currentProjectIndex + 1) % projects.length);
                 }
+            }
+        }
+
+        hamburger.addEventListener('click', function () {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        function createSlider() {
+            const requestedProject = getQueryParam('project');
+            if (requestedProject !== null) {
+                const projectIndex = parseInt(requestedProject);
+                if (!isNaN(projectIndex) && projectIndex >= 0 && projectIndex < projects.length) {
+                    currentProjectIndex = projectIndex;
+                }
+            }
+
+            const project = projects[currentProjectIndex];
+
+            slider.innerHTML = '';
+            thumbnailNav.innerHTML = '';
+            slideControls.innerHTML = '';
+
+            project.images.forEach((image, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                slide.style.backgroundImage = `url('${image}')`;
+                if (index === currentSlideIndex) {
+                    slide.classList.add('active');
+                }
+                slider.appendChild(slide);
+
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'thumbnail';
+                if (index === currentSlideIndex) {
+                    thumbnail.classList.add('active');
+                }
+                thumbnail.innerHTML = `<img src="${image}" alt="Thumbnail ${index + 1}">`;
+                thumbnail.addEventListener('click', () => {
+                    if (!isTransitioning) {
+                        navigateToSlide(index);
+                    }
+                });
+                thumbnailNav.appendChild(thumbnail);
+
+                const dot = document.createElement('div');
+                dot.className = 'slide-dot';
+                if (index === currentSlideIndex) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', () => {
+                    if (!isTransitioning) {
+                        navigateToSlide(index);
+                    }
+                });
+                slideControls.appendChild(dot);
             });
 
+            projectTitle.textContent = project.title;
+            projectDetails.innerHTML = `
+        <span class="project-detail"><i class="far fa-calendar"></i> ${project.date}</span>
+        <span class="project-detail"><i class="fas fa-map-marker-alt"></i> ${project.location}</span>
+        <span class="project-detail"><i class="fas fa-ruler-combined"></i> ${project.area}</span>
+    `;
+            projectDescription.textContent = project.description;
+
+            addSwipeFunctionality();
+        }
+
+        if (isMobileDevice() && swipeIndicator) {
+            swipeIndicator.classList.add('mobile-visible');
+
+            setTimeout(() => {
+                swipeIndicator.style.opacity = '0';
+                setTimeout(() => {
+                    swipeIndicator.style.display = 'none';
+                }, 1000);
+            }, 5000);
+        }
+
+        function navigateToSlide(index) {
+            if (isTransitioning || index === currentSlideIndex) return;
+
+            isTransitioning = true;
+
+            const slides = document.querySelectorAll('.slide');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const dots = document.querySelectorAll('.slide-dot');
+
+            slides[currentSlideIndex].style.opacity = 0;
+
+            setTimeout(() => {
+                slides[currentSlideIndex].classList.remove('active');
+                thumbnails[currentSlideIndex].classList.remove('active');
+                dots[currentSlideIndex].classList.remove('active');
+
+                currentSlideIndex = index;
+
+                slides[currentSlideIndex].classList.add('active');
+                thumbnails[currentSlideIndex].classList.add('active');
+                dots[currentSlideIndex].classList.add('active');
+
+                // REMOVED: The code that toggles project info panel visibility
+                // The description will now always remain visible
+
+                setTimeout(() => {
+                    slides[currentSlideIndex].style.opacity = 1;
+                    isTransitioning = false;
+                }, 50);
+            }, 800);
+        }
+
+        function navigateToProject(index) {
+            if (isTransitioning) return;
+
+            currentProjectIndex = index;
+            currentSlideIndex = 0;
             createSlider();
+
+            const newUrl = `${window.location.pathname}?projects=${currentProjectIndex}`;
+            window.history.pushState({}, '', newUrl);
+        }
+
+        prevProjectBtn.addEventListener('click', () => {
+            if (!isTransitioning) {
+                navigateToProject((currentProjectIndex - 1 + projects.length) % projects.length);
+            }
         });
-    </script>
+
+        nextProjectBtn.addEventListener('click', () => {
+            if (!isTransitioning) {
+                navigateToProject((currentProjectIndex + 1) % projects.length);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (isTransitioning) return;
+
+            if (e.key === 'ArrowLeft') {
+                navigateToSlide((currentSlideIndex - 1 + projects[currentProjectIndex].images.length) % projects[currentProjectIndex].images.length);
+            } else if (e.key === 'ArrowRight') {
+                navigateToSlide((currentSlideIndex + 1) % projects[currentProjectIndex].images.length);
+            } else if (e.key === 'ArrowUp') {
+                navigateToProject((currentProjectIndex - 1 + projects.length) % projects.length);
+            } else if (e.key === 'ArrowDown') {
+                navigateToProject((currentProjectIndex + 1) % projects.length);
+            }
+        });
+
+        createSlider();
+    });
+</script>
 </body>
 
 </html>
